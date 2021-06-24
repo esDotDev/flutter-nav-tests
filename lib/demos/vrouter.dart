@@ -15,6 +15,7 @@ class _VRouterTestState extends State<VRouterTest> {
   @override
   void initState() {
     super.initState();
+    // Hook VRouter into the urlNotifier that is shared by all the demos
     urlNotifier.addListener(() {
       routerKey.currentState?.push(urlNotifier.value);
     });
@@ -59,17 +60,13 @@ class _VRouterTestState extends State<VRouterTest> {
             ..._buildHatRoutes(),
           ],
         ),
-        // VWidget(path: r':_(.*)', widget: UnknownPathWidget())
+        VWidget(path: r':_(.*)', widget: UnknownPathWidget())
       ],
     );
   }
 
   List<VRouteElement> _buildShirtRoutes() {
     return [
-      VWidget(
-        path: '/$shirts',
-        widget: TextButton(child: Text("tees"), onPressed: () => routerKey.currentState?.push('$tees')),
-      ),
       VNester(
         path: '/$shirts/',
         // Nesting: Wrap a secondary tab menu around these child routes
@@ -82,7 +79,7 @@ class _VRouterTestState extends State<VRouterTest> {
           // Tees
           VWidget(
             path: "$tees",
-            widget: ProductsListPage(tees, category: shirts),
+            widget: ProductsListPage(category: shirts, subCategory: tees),
             stackedRoutes: [
               VWidget(path: "$productInfo/:id", widget: ProductDetailsPage()),
             ],
@@ -90,7 +87,7 @@ class _VRouterTestState extends State<VRouterTest> {
           // Sweaters
           VWidget(
             path: "$sweaters",
-            widget: ProductsListPage(sweaters, category: shirts),
+            widget: ProductsListPage(category: shirts, subCategory: sweaters),
             stackedRoutes: [
               VWidget(path: "$productInfo/:id", widget: ProductDetailsPage()),
             ],
@@ -98,7 +95,7 @@ class _VRouterTestState extends State<VRouterTest> {
           // Tanks
           VWidget(
             path: "$tanks",
-            widget: ProductsListPage(tanks, category: shirts),
+            widget: ProductsListPage(category: shirts, subCategory: tanks),
             stackedRoutes: [
               VWidget(path: "$productInfo/:id", widget: ProductDetailsPage()),
             ],
@@ -110,10 +107,6 @@ class _VRouterTestState extends State<VRouterTest> {
 
   List<VRouteElement> _buildPantRoutes() {
     return [
-      VWidget(
-        path: '/$pants',
-        widget: TextButton(child: Text("pants"), onPressed: () => routerKey.currentState?.push('$pants')),
-      ),
       VNester(
         path: '/$pants/',
         // Nesting: Wrap a secondary tab menu around these child routes
@@ -126,7 +119,7 @@ class _VRouterTestState extends State<VRouterTest> {
           // Tees
           VWidget(
             path: "$sweats",
-            widget: ProductsListPage(sweats, category: pants),
+            widget: ProductsListPage(category: pants, subCategory: sweats),
             // Product info page is stacked on to of the productList, back button "just works"
             stackedRoutes: [
               VWidget(path: "$productInfo/:id", widget: ProductDetailsPage()),
@@ -135,7 +128,7 @@ class _VRouterTestState extends State<VRouterTest> {
           // Sweaters
           VWidget(
             path: "$jeans",
-            widget: ProductsListPage(jeans, category: pants),
+            widget: ProductsListPage(category: pants, subCategory: jeans),
             stackedRoutes: [
               VWidget(path: "$productInfo/:id", widget: ProductDetailsPage()),
             ],
@@ -143,7 +136,7 @@ class _VRouterTestState extends State<VRouterTest> {
           // Tanks
           VWidget(
             path: "$shorts",
-            widget: ProductsListPage(shorts, category: pants),
+            widget: ProductsListPage(category: pants, subCategory: shorts),
             stackedRoutes: [
               VWidget(path: "$productInfo/:id", widget: ProductDetailsPage()),
             ],
@@ -155,10 +148,6 @@ class _VRouterTestState extends State<VRouterTest> {
 
   List<VRouteElement> _buildHatRoutes() {
     return [
-      VWidget(
-        path: '/$hats',
-        widget: TextButton(child: Text("hats"), onPressed: () => routerKey.currentState?.push('$hats')),
-      ),
       VNester(
         path: '/$hats/',
         // Nesting: Wrap a secondary tab menu around these child routes
@@ -171,7 +160,7 @@ class _VRouterTestState extends State<VRouterTest> {
           // Tees
           VWidget(
             path: "$toques",
-            widget: ProductsListPage(toques, category: hats),
+            widget: ProductsListPage(category: hats, subCategory: toques),
             // Product info page is stacked on to of the productList, back button "just works"
             stackedRoutes: [
               VWidget(path: "$productInfo/:id", widget: ProductDetailsPage()),
@@ -180,7 +169,7 @@ class _VRouterTestState extends State<VRouterTest> {
           // Sweaters
           VWidget(
             path: "$visors",
-            widget: ProductsListPage(visors, category: hats),
+            widget: ProductsListPage(category: hats, subCategory: visors),
             stackedRoutes: [
               VWidget(path: "$productInfo/:id", widget: ProductDetailsPage()),
             ],
@@ -188,7 +177,7 @@ class _VRouterTestState extends State<VRouterTest> {
           // Tanks
           VWidget(
             path: "$caps",
-            widget: ProductsListPage(caps, category: hats),
+            widget: ProductsListPage(category: hats, subCategory: caps),
             stackedRoutes: [
               VWidget(path: "$productInfo/:id", widget: ProductDetailsPage()),
             ],

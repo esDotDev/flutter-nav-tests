@@ -22,7 +22,7 @@ class MainAppScaffold extends StatelessWidget {
             Expanded(child: content),
             Row(
               children: [
-                _TabBtn('/', padding: padding, exactMatch: true),
+                _TabBtn('/', label: "Home", padding: padding, exactMatch: true),
                 _TabBtn('/$shirts/$tees', rootPath: shirts, label: "Shirts", padding: padding),
                 _TabBtn('/$pants/$sweats', rootPath: pants, label: "Pants", padding: padding),
                 _TabBtn('/$hats/$toques', rootPath: hats, label: "Hats", padding: padding),
@@ -58,7 +58,7 @@ class NestedTabScaffold extends StatelessWidget {
 }
 
 class ProductsListPage extends StatelessWidget {
-  ProductsListPage(this.subCategory, {Key? key, required this.category}) : super(key: key);
+  ProductsListPage({Key? key, required this.category, required this.subCategory}) : super(key: key);
 
   final String category;
   final String subCategory;
