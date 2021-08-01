@@ -17,7 +17,7 @@ class _VRouterTestState extends State<VRouterTest> {
     super.initState();
     // Hook VRouter into the urlNotifier that is shared by all the demos
     urlNotifier.addListener(() {
-      routerKey.currentState?.push(urlNotifier.value);
+      routerKey.currentState?.to(urlNotifier.value);
     });
   }
 

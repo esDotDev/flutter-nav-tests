@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_nav_tests/shared_paths.dart';
 import 'demos/vrouter.dart';
 
 /// This value notifier is used as the src of truth for all demos
