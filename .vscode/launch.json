@@ -1,0 +1,24 @@
+{
+  "configurations": [
+    {
+      "name": "VRouter Demo",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/main.dart",
+      "args": [
+        "--dart-entrypoint-args",
+        "vrouter",
+      ],
+    },
+    {
+      "name": "GoRouter Demo",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/main.dart",
+      "args": [
+        "--dart-entrypoint-args",
+        "gorouter",
+      ],
+    },
+  ]
+}

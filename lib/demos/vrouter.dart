@@ -5,12 +5,12 @@ import 'package:vrouter/vrouter.dart';
 import '../main.dart';
 import '../shared_paths.dart';
 
-class VRouterTest extends StatefulWidget {
+class VRouterDemo extends StatefulWidget {
   @override
-  State<VRouterTest> createState() => _VRouterTestState();
+  State<VRouterDemo> createState() => _VRouterDemoState();
 }
 
-class _VRouterTestState extends State<VRouterTest> {
+class _VRouterDemoState extends State<VRouterDemo> {
   final GlobalKey<VRouterState> routerKey = GlobalKey();
   @override
   void initState() {
