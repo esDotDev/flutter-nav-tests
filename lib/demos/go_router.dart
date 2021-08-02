@@ -11,8 +11,7 @@ class GoRouterDemo extends StatefulWidget {
 
 class _GoRouterDemoState extends State<GoRouterDemo> {
   late final GoRouter _router;
-
-  void _go() => context.go(urlNotifier.value);
+  void _go() => _router.go(urlNotifier.value);
 
   @override
   void initState() {
@@ -29,8 +28,14 @@ class _GoRouterDemoState extends State<GoRouterDemo> {
     );
   }
 
+  @override
+  void dispose() {
+    urlNotifier.removeListener(_go);
+    super.dispose();
+  }
+
   List<GoRoute> _routes(BuildContext context, String location) {
-    // Update the urlNotifier whenever path changes, this keeps
+    // Update the urlNotifier whenever the location changes; this keeps
     // urlNotifier.value in sync when pop() is called
     urlNotifier.value = location;
 
@@ -46,12 +51,6 @@ class _GoRouterDemoState extends State<GoRouterDemo> {
 
   Page<dynamic> _error(BuildContext context, GoRouterState state) =>
       MaterialPage(child: Scaffold(body: Text(state.error.toString())));
-
-  @override
-  void dispose() {
-    urlNotifier.removeListener(_go);
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) => MaterialApp.router(
