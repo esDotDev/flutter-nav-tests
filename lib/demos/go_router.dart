@@ -11,7 +11,7 @@ class GoRouterDemo extends StatefulWidget {
 
 class _GoRouterDemoState extends State<GoRouterDemo> {
   void _go() => _router.go(urlNotifier.value);
-  void _going() => urlNotifier.value = _router.location;
+  void _gone() => urlNotifier.value = _router.location;
 
   @override
   void initState() {
@@ -22,14 +22,13 @@ class _GoRouterDemoState extends State<GoRouterDemo> {
 
     // Update the urlNotifier whenever the location changes; this keeps
     // urlNotifier.value in sync when pop() is called
-    // TODO: this doesn't yet work for pop
-    _router.routerDelegate.addListener(_going);
+    _router.addListener(_gone);
   }
 
   @override
   void dispose() {
     urlNotifier.removeListener(_go);
-    _router.routerDelegate.removeListener(_going);
+    _router.removeListener(_gone);
     super.dispose();
   }
 
