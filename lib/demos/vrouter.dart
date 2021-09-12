@@ -29,7 +29,8 @@ class _VRouterDemoState extends State<VRouterDemo> {
       key: routerKey,
       initialUrl: urlNotifier.value,
       debugShowCheckedModeBanner: false,
-      buildTransition: (inAnim, _, child) => FadeTransition(opacity: inAnim, child: child),
+      buildTransition: (inAnim, _, child) =>
+          FadeTransition(opacity: inAnim, child: child),
       routes: [
         // Use a top level nester to add our main tab menu (shirts | pants | hats )
         VNester(
@@ -37,7 +38,7 @@ class _VRouterDemoState extends State<VRouterDemo> {
           widgetBuilder: (child) => MainAppScaffold(content: child),
           nestedRoutes: [
             /// Home view, does not show any sub-menu
-            VWidget(path: "/", widget: HomeView()),
+            VWidget(path: "/", widget: HomeView('VROUTER')),
 
             /// Each of these methods declares 6 routes,
             /// and wraps them in nested sub menu
@@ -81,7 +82,14 @@ class _VRouterDemoState extends State<VRouterDemo> {
             path: "$tees",
             widget: ProductsListPage(category: shirts, subCategory: tees),
             stackedRoutes: [
-              VWidget(path: "$productInfo/:id", widget: ProductDetailsPage()),
+              VWidget(
+                path: "$productInfo/:id",
+                widget: Builder(
+                  builder: (context) => ProductDetailsPage(
+                    context.vRouter.pathParameters['id'] ?? "",
+                  ),
+                ),
+              ),
             ],
           ),
           // Sweaters
@@ -89,7 +97,14 @@ class _VRouterDemoState extends State<VRouterDemo> {
             path: "$sweaters",
             widget: ProductsListPage(category: shirts, subCategory: sweaters),
             stackedRoutes: [
-              VWidget(path: "$productInfo/:id", widget: ProductDetailsPage()),
+              VWidget(
+                path: "$productInfo/:id",
+                widget: Builder(
+                  builder: (context) => ProductDetailsPage(
+                    context.vRouter.pathParameters['id'] ?? "",
+                  ),
+                ),
+              ),
             ],
           ),
           // Tanks
@@ -97,7 +112,14 @@ class _VRouterDemoState extends State<VRouterDemo> {
             path: "$tanks",
             widget: ProductsListPage(category: shirts, subCategory: tanks),
             stackedRoutes: [
-              VWidget(path: "$productInfo/:id", widget: ProductDetailsPage()),
+              VWidget(
+                path: "$productInfo/:id",
+                widget: Builder(
+                  builder: (context) => ProductDetailsPage(
+                    context.vRouter.pathParameters['id'] ?? "",
+                  ),
+                ),
+              ),
             ],
           ),
         ],
@@ -122,7 +144,14 @@ class _VRouterDemoState extends State<VRouterDemo> {
             widget: ProductsListPage(category: pants, subCategory: sweats),
             // Product info page is stacked on to of the productList, back button "just works"
             stackedRoutes: [
-              VWidget(path: "$productInfo/:id", widget: ProductDetailsPage()),
+              VWidget(
+                path: "$productInfo/:id",
+                widget: Builder(
+                  builder: (context) => ProductDetailsPage(
+                    context.vRouter.pathParameters['id'] ?? "",
+                  ),
+                ),
+              ),
             ],
           ),
           // Sweaters
@@ -130,7 +159,14 @@ class _VRouterDemoState extends State<VRouterDemo> {
             path: "$jeans",
             widget: ProductsListPage(category: pants, subCategory: jeans),
             stackedRoutes: [
-              VWidget(path: "$productInfo/:id", widget: ProductDetailsPage()),
+              VWidget(
+                path: "$productInfo/:id",
+                widget: Builder(
+                  builder: (context) => ProductDetailsPage(
+                    context.vRouter.pathParameters['id'] ?? "",
+                  ),
+                ),
+              ),
             ],
           ),
           // Tanks
@@ -138,7 +174,14 @@ class _VRouterDemoState extends State<VRouterDemo> {
             path: "$shorts",
             widget: ProductsListPage(category: pants, subCategory: shorts),
             stackedRoutes: [
-              VWidget(path: "$productInfo/:id", widget: ProductDetailsPage()),
+              VWidget(
+                path: "$productInfo/:id",
+                widget: Builder(
+                  builder: (context) => ProductDetailsPage(
+                    context.vRouter.pathParameters['id'] ?? "",
+                  ),
+                ),
+              ),
             ],
           ),
         ],
@@ -163,7 +206,14 @@ class _VRouterDemoState extends State<VRouterDemo> {
             widget: ProductsListPage(category: hats, subCategory: toques),
             // Product info page is stacked on to of the productList, back button "just works"
             stackedRoutes: [
-              VWidget(path: "$productInfo/:id", widget: ProductDetailsPage()),
+              VWidget(
+                path: "$productInfo/:id",
+                widget: Builder(
+                  builder: (context) => ProductDetailsPage(
+                    context.vRouter.pathParameters['id'] ?? "",
+                  ),
+                ),
+              ),
             ],
           ),
           // Sweaters
@@ -171,7 +221,14 @@ class _VRouterDemoState extends State<VRouterDemo> {
             path: "$visors",
             widget: ProductsListPage(category: hats, subCategory: visors),
             stackedRoutes: [
-              VWidget(path: "$productInfo/:id", widget: ProductDetailsPage()),
+              VWidget(
+                path: "$productInfo/:id",
+                widget: Builder(
+                  builder: (context) => ProductDetailsPage(
+                    context.vRouter.pathParameters['id'] ?? "",
+                  ),
+                ),
+              ),
             ],
           ),
           // Tanks
@@ -179,7 +236,14 @@ class _VRouterDemoState extends State<VRouterDemo> {
             path: "$caps",
             widget: ProductsListPage(category: hats, subCategory: caps),
             stackedRoutes: [
-              VWidget(path: "$productInfo/:id", widget: ProductDetailsPage()),
+              VWidget(
+                path: "$productInfo/:id",
+                widget: Builder(
+                  builder: (context) => ProductDetailsPage(
+                    context.vRouter.pathParameters['id'] ?? "",
+                  ),
+                ),
+              ),
             ],
           ),
         ],

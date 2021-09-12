@@ -44,11 +44,14 @@ class MainAppScaffold extends StatelessWidget {
 }
 
 class HomeView extends StatelessWidget {
+  final String tag;
+  const HomeView(this.tag, {Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) => Container(
       alignment: Alignment.center,
       color: Colors.blue.shade300,
-      child: Text("HOME"));
+      child: Text("HOME: $tag"));
 }
 
 class NestedTabScaffold extends StatelessWidget {
@@ -92,9 +95,11 @@ class ProductsListPage extends StatelessWidget {
 }
 
 class ProductDetailsPage extends StatelessWidget {
+  final String id;
+  const ProductDetailsPage(this.id, {Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    String id = context.vRouter.pathParameters['id'] ?? "";
     return Scaffold(
       body: Stack(
         children: [
