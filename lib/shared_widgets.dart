@@ -63,7 +63,7 @@ class NestedTabScaffold extends StatelessWidget {
       : super(key: key);
   final Widget child;
   final String category;
-  final List<String> subCategories;
+  final Iterable<String> subCategories;
 
   @override
   Widget build(BuildContext context) => Column(
@@ -101,14 +101,22 @@ class ProductDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          BackButton(),
-          // Product details
-          Center(
-            child: Text("$id", style: TextStyle(fontSize: 48)),
-          ),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Stack(
+          children: [
+            Container(
+                color: Colors.grey.shade200,
+                alignment: Alignment.center,
+                width: double.infinity,
+                child: Text(id, style: TextStyle(fontSize: 32))),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: BackButton(),
+              // Product details
+            ),
+          ],
+        ),
       ),
     );
   }

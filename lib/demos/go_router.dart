@@ -1,8 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_nav_tests/shared_widgets.dart';
 
 import '../main.dart';
 import 'package:go_router/go_router.dart';
+
+import '../shared_paths.dart';
 
 class GoRouterDemo extends StatefulWidget {
   @override
@@ -48,95 +51,45 @@ class _GoRouterDemoState extends State<GoRouterDemo> {
         ),
       ),
       GoRoute(
-        path: '/shirts/:kind(tees|sweaters|tanks)',
-        builder: (context, state) => FadeTransitionPage(
-          key: state.pageKey,
-          child: MainAppScaffold(
-            content: NestedTabScaffold(
-              category: 'shirts',
-              subCategories: ['tees', 'sweaters', 'tanks'],
-              child: ProductsListPage(
-                category: 'shirts',
-                subCategory: state.params['kind']!,
-              ),
-            ),
-          ),
-        ),
-        routes: [
-          GoRoute(
-            path: 'productInfo/:id',
-            builder: (context, state) => FadeTransitionPage(
-              key: state.pageKey,
-              child: MainAppScaffold(
-                content: NestedTabScaffold(
-                  category: 'shirts',
-                  subCategories: ['tees', 'sweaters', 'tanks'],
-                  child: ProductDetailsPage(state.params['id']!),
+        path: '/:cat(shirts|pants|hats)/:kind',
+        builder: (context, state) {
+          final cat = state.params['cat']!;
+          final subcats = _subcatsFrom(state.params['cat']!);
+          final kind = state.params['kind']!;
+
+          return FadeTransitionPage(
+            key: ValueKey(state.subloc),
+            child: MainAppScaffold(
+              content: NestedTabScaffold(
+                category: cat,
+                subCategories: subcats,
+                child: ProductsListPage(
+                  category: cat,
+                  subCategory: kind,
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-      GoRoute(
-        path: '/pants/:kind(sweats|jeans|shorts)',
-        builder: (context, state) => FadeTransitionPage(
-          key: state.pageKey,
-          child: MainAppScaffold(
-            content: NestedTabScaffold(
-              category: 'pants',
-              subCategories: ['sweats', 'jeans', 'shorts'],
-              child: ProductsListPage(
-                category: 'pants',
-                subCategory: state.params['kind']!,
-              ),
-            ),
-          ),
-        ),
+          );
+        },
         routes: [
           GoRoute(
             path: 'productInfo/:id',
-            builder: (context, state) => FadeTransitionPage(
-              key: state.pageKey,
-              child: MainAppScaffold(
-                content: NestedTabScaffold(
-                  category: 'pants',
-                  subCategories: ['sweats', 'jeans', 'shorts'],
-                  child: ProductDetailsPage(state.params['id']!),
+            builder: (context, state) {
+              final cat = state.params['cat']!;
+              final subcats = _subcatsFrom(state.params['cat']!);
+              final id = state.params['id']!;
+
+              return FadeTransitionPage(
+                key: state.pageKey,
+                child: MainAppScaffold(
+                  content: NestedTabScaffold(
+                    category: cat,
+                    subCategories: subcats,
+                    child: ProductDetailsPage(id),
+                  ),
                 ),
-              ),
-            ),
-          ),
-        ],
-      ),
-      GoRoute(
-        path: '/hats/:kind(toques|visors|caps)',
-        builder: (context, state) => FadeTransitionPage(
-          key: state.pageKey,
-          child: MainAppScaffold(
-            content: NestedTabScaffold(
-              category: 'hats',
-              subCategories: ['toques', 'visors', 'caps'],
-              child: ProductsListPage(
-                category: 'hats',
-                subCategory: state.params['kind']!,
-              ),
-            ),
-          ),
-        ),
-        routes: [
-          GoRoute(
-            path: 'productInfo/:id',
-            builder: (context, state) => FadeTransitionPage(
-              key: state.pageKey,
-              child: MainAppScaffold(
-                content: NestedTabScaffold(
-                  category: 'hats',
-                  subCategories: ['toques', 'visors', 'caps'],
-                  child: ProductDetailsPage(state.params['id']!),
-                ),
-              ),
-            ),
+              );
+            },
           ),
         ],
       ),
@@ -148,52 +101,31 @@ class _GoRouterDemoState extends State<GoRouterDemo> {
     initialLocation: urlNotifier.value,
     debugLogDiagnostics: true,
   );
-}
 
-class FadeTransitionPage<T> extends Page<T> {
-  final Widget child;
-  final Duration duration;
-
-  const FadeTransitionPage({
-    required this.child,
-    LocalKey? key,
-    this.duration = const Duration(milliseconds: 300),
-  }) : super(key: key);
-
-  @override
-  Route<T> createRoute(BuildContext context) =>
-      PageBasedFadeTransitionRoute<T>(this);
-}
-
-class PageBasedFadeTransitionRoute<T> extends PageRoute<T> {
-  final FadeTransitionPage<T> _page;
-
-  PageBasedFadeTransitionRoute(this._page) : super(settings: _page);
-
-  @override
-  Color? get barrierColor => null;
-
-  @override
-  String? get barrierLabel => null;
-
-  @override
-  Duration get transitionDuration => _page.duration;
-
-  @override
-  bool get maintainState => true;
-
-  @override
-  Widget buildPage(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation) {
-    final curveTween = CurveTween(curve: Curves.easeIn);
-    return FadeTransition(
-      opacity: animation.drive(curveTween),
-      child: (settings as FadeTransitionPage).child,
-    );
+  static Iterable<String> _subcatsFrom(String cat) {
+    switch (cat) {
+      case 'shirts':
+        return ShirtType.values.map(describeEnum);
+      case 'pants':
+        return PantsType.values.map(describeEnum);
+      case 'hats':
+        return HatType.values.map(describeEnum);
+      default:
+        throw Exception('Unknown category: $cat');
+    }
   }
+}
 
-  @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-          Animation<double> secondaryAnimation, Widget child) =>
-      child;
+class FadeTransitionPage<T> extends CustomTransitionPage<T> {
+  const FadeTransitionPage({
+    required Widget child,
+    LocalKey? key,
+  }) : super(key: key, transitionsBuilder: _transitionsBuilder, child: child);
+
+  static Widget _transitionsBuilder(
+          BuildContext context,
+          Animation<double> animation,
+          Animation<double> secondaryAnimation,
+          Widget child) =>
+      FadeTransition(opacity: animation, child: child);
 }
