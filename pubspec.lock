@@ -85,7 +85,7 @@ packages:
       name: go_router
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.9.5"
+    version: "1.1.1"
   js:
     dependency: transitive
     description:
@@ -141,7 +141,7 @@ packages:
       name: plugin_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "2.0.2"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -258,7 +258,7 @@ packages:
       name: vrouter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.0+13"
+    version: "1.2.0+14"
 sdks:
   dart: ">=2.14.0 <3.0.0"
   flutter: ">=2.5.0"

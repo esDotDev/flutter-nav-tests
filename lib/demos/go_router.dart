@@ -45,14 +45,14 @@ class _GoRouterDemoState extends State<GoRouterDemo> {
     routes: [
       GoRoute(
         path: '/',
-        builder: (context, state) => FadeTransitionPage(
+        pageBuilder: (context, state) => FadeTransitionPage(
           key: state.pageKey,
           child: MainAppScaffold(content: HomeView('GO_ROUTER')),
         ),
       ),
       GoRoute(
         path: '/:cat(shirts|pants|hats)/:kind',
-        builder: (context, state) {
+        pageBuilder: (context, state) {
           final cat = state.params['cat']!;
           final subcats = _subcatsFrom(state.params['cat']!);
           final kind = state.params['kind']!;
@@ -74,7 +74,7 @@ class _GoRouterDemoState extends State<GoRouterDemo> {
         routes: [
           GoRoute(
             path: 'productInfo/:id',
-            builder: (context, state) {
+            pageBuilder: (context, state) {
               final cat = state.params['cat']!;
               final subcats = _subcatsFrom(state.params['cat']!);
               final id = state.params['id']!;
@@ -94,7 +94,7 @@ class _GoRouterDemoState extends State<GoRouterDemo> {
         ],
       ),
     ],
-    error: (context, state) => FadeTransitionPage(
+    errorPageBuilder: (context, state) => FadeTransitionPage(
       key: state.pageKey,
       child: Scaffold(body: Text(state.error.toString())),
     ),
